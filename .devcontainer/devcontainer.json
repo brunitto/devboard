@@ -1,0 +1,8 @@
+// Development environment container definition
+{
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"forwardPorts": [8000],
+	"extensions": ["ms-python.python", "editorconfig.editorconfig"]
+}
