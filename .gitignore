@@ -1,0 +1,8 @@
+# Python cache
+**/__pycache__
+
+# SQLite database
+db.sqlite*
+
+# Coverage reports
+.coverage
