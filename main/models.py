@@ -167,13 +167,13 @@ class Follow(models.Model):
     follower = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
-        related_name='followers'
+        related_name='followeds'
     )
 
     followed = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
-        related_name='followeds'
+        related_name='followers'
     )
 
     created_at = models.DateTimeField(
@@ -187,3 +187,5 @@ class Follow(models.Model):
         except User.DoesNotExist:
             pass
 
+    def __str__(self):
+        return f'{self.follower.username} → {self.followed.username}'

@@ -1,0 +1,19 @@
+{% extends "main/layout.html" %}
+
+{% block body %}
+  <h1>Post list</h1>
+  {% if user.is_authenticated %}
+    <p>
+      <a href="/post/create/">Create</a>
+    </p>
+  {% else %}
+    <p>Login to create post</p>
+  {% endif %}
+  <ul>
+    {% for post in post_list %}
+      <li><a href="/post/{{ post.id }}">{{ post }}</a></li>
+    {% empty %}
+      <li>No posts</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "main/layout.html" %}
+
+{% block body %}
+  <h1>User details</h1>
+
+  {% if user.is_authenticated %}
+    <form method="post" action="/user/{{ user.id }}/follow/create/">
+      {% csrf_token %}
+      <input type="submit" value="Follow">
+    </form>
+    <form method="post" action="/user/{{ user.id }}/follow/delete/">
+      {% csrf_token %}
+      <input type="submit" value="Unfollow">
+    </form>
+  {% else %}
+    <p>Login to follow / unfollow</p>
+  {% endif %}
+  <p>ID: {{ user_model.id }}</p>
+  <p>Username: {{ user_model.username }}</p>
+  <p>Date joined: {{ user_model.date_joined }}</p>
+  <p>Last login: {{ user_model.last_login }}</p>
+  <h2>Followers</h2>
+  <ul>
+    {% for follow in user_model.followers.all %}
+      <li><a href="/user/{{ follow.follower.id }}">{{ follow.follower }}</a></li>
+    {% empty %}
+      <li>No followers</li>
+    {% endfor %}
+  </ul>
+  <h2>Followeds</h2>
+  <ul>
+    {% for follow in user_model.followeds.all %}
+      <li><a href="/user/{{ follow.followed.id }}">{{ follow.followed }}</a></li>
+    {% empty %}
+      <li>No followeds</li>
+    {% endfor %}
+  </ul>
+  <h2>Posts</h2>
+  <ul>
+    {% for post in user_model.post_set.all %}
+      <li><a href="/post/{{ post.id }}">{{ post }}</a></li>
+    {% empty %}
+      <li>No posts</li>
+    {% endfor %}
+  </ul>
+  <h2>Comments</h2>
+  <ul>
+    {% for comment in user_model.comment_set.all %}
+      <li>
+        <p><a href="/post/{{ post.id }}/">{{ comment.post.title }}</a></p>
+        <p>{{ comment.created_at }}</p>
+        <p>{{ comment.body }}</p>
+        <p>{{ comment.upvotes.count }} upvotes, {{ comment.downvotes.count }} downvotes</p>
+      </li>
+    {% empty %}
+      <li>No posts</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
